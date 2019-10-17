@@ -3,7 +3,7 @@ package ivan.samoylov.Model;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -13,6 +13,14 @@ public class User {
     @Column(name = "name", nullable = false, unique = false)
     String name;
     int age;
+
+    public User() {
+    }
+
+    public User(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
 
     public void setId(int id) {
         this.id = id;
@@ -26,24 +34,16 @@ public class User {
         this.age = age;
     }
 
-    public User() {
-    }
-
     public int getId() {
         return id;
     }
 
-    public String getName() {
+    public String getName(String name) {
         return name;
     }
 
     public int getAge() {
         return age;
-    }
-
-    public User(String name, int age) {
-        this.name = name;
-        this.age = age;
     }
 
     @Override

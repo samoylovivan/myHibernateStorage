@@ -32,22 +32,30 @@ public class HibernateStorage implements Storage {
     }
 
 
-    public User removeUser(int id) {
+    public int removeUser(int id) {
         try (Session session = sessionFactory.openSession()) {
-            return session
-                    .createQuery("DELETE User WHERE id = :id ", User.class)
-                    .setParameter("id", id)
-                    .getSingleResult();
+            Transaction transaction = session.beginTransaction();
+            String hql = String.format("DELETE FROM User WHERE id = :id ", User.class);
+            Query query = session
+                                 .createQuery(hql)
+                                 .setParameter("id", id);
+            int retValue = query.executeUpdate();
+            transaction.commit();
+            return retValue;
         }
     }
 
 
-    public User removeUserByName(String name) {
+    public int removeUserByName(String name) {
         try (Session session = sessionFactory.openSession()) {
-            return session
-                    .createQuery("DELETE User WHERE name = :name ", User.class)
-                    .setParameter("name", name)
-                    .getSingleResult();
+            Transaction transaction = session.beginTransaction();
+            String hql = String.format("DELETE FROM User WHERE name = :name ", User.class);
+            Query query = session
+                                 .createQuery(hql)
+                                 .setParameter("name", name);
+            int retValue = query.executeUpdate();
+            transaction.commit();
+            return retValue;
         }
     }
 
@@ -81,6 +89,8 @@ public class HibernateStorage implements Storage {
 
     
     public List<User> getAllUsers() {
-            return null;
+        try (Session session = sessionFactory.openSession()) {
+            return session.createQuery("FROM User", User.class).list();
+        }
     }
 }

@@ -5,8 +5,8 @@ import java.util.List;
 
 public interface Storage {
     int removeAll();
-    User removeUser(int id);
-    User removeUserByName(String name);
+    int removeUser(int id);
+    int removeUserByName(String name);
     void addUser(User user);
     void updateUser(User user);
     User getUser(int id);
